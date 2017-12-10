@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping>
+		<class name="com.hpe.store.order.vo.Order" table="orders">
+			<id name="oid">
+				<generator class="native"/>
+			</id>
+			<property name="total"/>
+			<property name="ordertime"/>
+			<property name="state"/>
+			<property name="name"/>
+			<property name="phone"/>
+			<property name="addr"/>
+			<!-- 订单与用户想关联，多对一 -->
+			<many-to-one name="user" lazy="false" class="com.hpe.store.user.vo.User" column="uid"/>
+			<!-- 配置与中间表订单项相关联：一对多 -->
+			<!-- 配置级联，否则既要保存order，又要再保存一次orderItem -->
+			<!-- 设置order-by,不然每次查询出的orderItems顺序可能都不一致 -->
+			<set name="orderItems" order-by="itemid" lazy="false" cascade="save-update">
+				<key column="oid"/>
+				<one-to-many class="com.hpe.store.order.vo.OrderItem"/>
+			</set>
+		</class>	
+	</hibernate-mapping>

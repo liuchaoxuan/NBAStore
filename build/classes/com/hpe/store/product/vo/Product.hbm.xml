@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <!-- private Integer pid;
+	private String pname;
+	private Double market_price;
+	private Double shop_price;
+	private String image;
+	private String pdesc;
+	private Integer is_hot;
+	private Date pdate;
+	// 二级分类外键 -->
+	
+    <hibernate-mapping>
+    	<class name="com.hpe.store.product.vo.Product" table="product">
+    		<id name="pid">
+    			<generator class="native" />
+    		</id>
+    		<property name="pname"></property>
+    		<property name="market_price"></property>
+    		<property name="shop_price"></property>
+    		<property name="image"></property>
+    		<property name="pdesc"></property>
+    		<property name="is_hot"></property>
+    		<property name="pdate"></property>
+    		<!-- 因为后边hql查询时有从product开始查起的，所以lazy要设置为false，同理二级分类到一级分类也要配置 -->
+    		<many-to-one name="categorySecond" lazy="false" class="com.hpe.store.categorysecond.vo.CategorySecond" column="csid"/>
+    	</class>
+    </hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <hibernate-mapping>
+    	<class name="com.hpe.store.category.vo.Category" table="category">
+    		<id name="cid">
+    			<generator class="native" />
+    		</id>
+    		<property name="cname"></property>
+    		<!-- 配置二级分类集合 -->
+    		<!-- 注意要配置lazy=false，否则查询一级分类时不会自动查询所有二级分类 -->
+    		<!-- order-by属性用来控制放入set的顺序，以便显示时每次顺序一致 -->
+    		<!-- 如果要想在删除一级分类时，同时删除下边的二级分类，需要配置cascade为delete，否则二级分类依然存在，只不过外键变为空了，同理二级分类和商品的级联 -->
+    		<set order-by="csid" cascade="delete" inverse="true" name="categorySeconds" lazy="false">
+    			<key column="cid"/>
+    			<one-to-many class="com.hpe.store.categorysecond.vo.CategorySecond"></one-to-many>
+    		</set>
+    	</class>
+    </hibernate-mapping>
